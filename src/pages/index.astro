@@ -16,7 +16,7 @@ const firstDocPage = sortedDocs.find((doc) => getDocPath(doc) !== '/docs');
 const getStartedPath = firstDocPage ? getDocPath(firstDocPage) : '/docs';
 
 // Icon mapping
-const icons = {
+const icons: Record<string, string> = {
   rocket: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
   </svg>`,
@@ -24,6 +24,10 @@ const icons = {
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
   </svg>`
 };
+
+function resolveIcon(iconName: string | undefined): string {
+  return iconName && iconName in icons ? icons[iconName] : icons.rocket;
+}
 ---
 
 <html lang="en" class="scroll-smooth">
@@ -97,7 +101,7 @@ const icons = {
             <div class="js-doc-card group hig-card relative pl-16 p-6">
               <dt class="text-base font-semibold leading-7 text-gray-900">
                 <div class="absolute left-4 top-6 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 text-white shadow-md transition-transform duration-200 group-hover:scale-105">
-                  <Fragment set:html={icons[doc.data.icon] || icons.rocket} class="text-white" />
+                  <Fragment set:html={resolveIcon(doc.data.icon)} class="text-white" />
                 </div>
                 {doc.data.title}
               </dt>
@@ -140,7 +144,7 @@ const icons = {
       </div>
     </footer>
 
-    <script type="module">
+    <script>
       import { gsap } from 'gsap';
 
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -163,7 +167,7 @@ const icons = {
           ease: 'power2.out'
         });
 
-        const magneticButtons = Array.from(document.querySelectorAll('[data-magnetic]'));
+        const magneticButtons = Array.from(document.querySelectorAll<HTMLElement>('[data-magnetic]'));
 
         magneticButtons.forEach((button) => {
           const strength = 10;
@@ -177,7 +181,7 @@ const icons = {
             });
           };
 
-          button.addEventListener('pointermove', (event) => {
+          button.addEventListener('pointermove', (event: PointerEvent) => {
             const rect = button.getBoundingClientRect();
             const offsetX = ((event.clientX - rect.left) / rect.width - 0.5) * strength;
             const offsetY = ((event.clientY - rect.top) / rect.height - 0.5) * strength;

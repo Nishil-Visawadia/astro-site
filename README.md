@@ -82,7 +82,7 @@ docker-compose.yml              # Local container run example
 
 ## Prerequisites
 
-- Node.js 20 LTS or newer
+- Node.js 22.12.0 or newer
 - npm 10 or newer
 - Git
 - Docker Desktop or Docker Engine if you want container deployment

@@ -18,7 +18,7 @@ function isActive(path: string): boolean {
 }
 
 // Icon mapping
-const icons = {
+const icons: Record<string, string> = {
   book: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
   </svg>`,
@@ -29,6 +29,10 @@ const icons = {
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
   </svg>`
 };
+
+function resolveIcon(iconName: string | undefined): string {
+  return iconName && iconName in icons ? icons[iconName] : icons.book;
+}
 
 interface Props {
   title: string;
@@ -80,7 +84,7 @@ const sortedDocs = [...docs].sort(sortDocsByOrder);
                     : 'text-gray-400 group-hover:text-blue-500'
                 ]}
               >
-                <Fragment set:html={icons[doc.data.icon] || icons.book} />
+                <Fragment set:html={resolveIcon(doc.data.icon)} />
               </span>
               <span class="truncate">{doc.data.title}</span>
             </a>
@@ -112,7 +116,7 @@ const sortedDocs = [...docs].sort(sortDocsByOrder);
                       ]}
                     >
                       <span class="flex-shrink-0 text-gray-400">
-                        <Fragment set:html={icons[doc.data.icon] || icons.book} />
+                        <Fragment set:html={resolveIcon(doc.data.icon)} />
                       </span>
                       <span class="truncate">{doc.data.title}</span>
                     </a>
@@ -277,7 +281,7 @@ const sortedDocs = [...docs].sort(sortDocsByOrder);
       }
     </style>
 
-    <script type="module">
+    <script>
       import { gsap } from 'gsap';
 
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -310,13 +314,16 @@ const sortedDocs = [...docs].sort(sortDocsByOrder);
     </script>
 
     <script>
-      const article = document.getElementById('docs-article');
-      const tocNav = document.getElementById('toc-nav');
+      import { gsap } from 'gsap';
+
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const article = document.getElementById('docs-article') as HTMLElement | null;
+      const tocNav = document.getElementById('toc-nav') as HTMLElement | null;
 
       if (article && tocNav) {
-        const headings = Array.from(article.querySelectorAll('h2, h3'));
+        const headings = Array.from(article.querySelectorAll<HTMLHeadingElement>('h2, h3'));
 
-        const slugify = (value) =>
+        const slugify = (value: string) =>
           value
             .toLowerCase()
             .trim()
@@ -353,7 +360,7 @@ const sortedDocs = [...docs].sort(sortDocsByOrder);
             )
             .join('');
 
-          const revealTargets = Array.from(article.querySelectorAll('p, ul, ol, pre, blockquote, table, h2, h3, .hig-card'));
+          const revealTargets = Array.from(article.querySelectorAll<HTMLElement>('p, ul, ol, pre, blockquote, table, h2, h3, .hig-card'));
 
           if (!prefersReducedMotion) {
             const io = new IntersectionObserver(
@@ -384,7 +391,7 @@ const sortedDocs = [...docs].sort(sortDocsByOrder);
             });
           }
 
-          const tocLinks = Array.from(tocNav.querySelectorAll('[data-toc-link]'));
+          const tocLinks = Array.from(tocNav.querySelectorAll<HTMLAnchorElement>('[data-toc-link]'));
           const headingObserver = new IntersectionObserver(
             (entries) => {
               entries.forEach((entry) => {
@@ -413,18 +420,30 @@ const sortedDocs = [...docs].sort(sortDocsByOrder);
 
     <script>
       // Progressive client search for production builds where Pagefind assets exist.
-      const searchInput = document.getElementById('docs-search-input');
-      const resultsContainer = document.getElementById('docs-search-results');
+      const searchInput = document.getElementById('docs-search-input') as HTMLInputElement | null;
+      const resultsContainer = document.getElementById('docs-search-results') as HTMLDivElement | null;
 
       if (searchInput && resultsContainer) {
-        let searchApiPromise;
-        const loadModule = new Function('path', 'return import(path);');
+        const input = searchInput;
+        const results = resultsContainer;
+        type SearchMatch = {
+          url: string;
+          excerpt?: string;
+          meta?: { title?: string };
+        };
+        type PagefindModule = {
+          options: (opts: { excerptLength: number }) => void;
+          search: (query: string) => Promise<{ results: Array<{ data: () => Promise<SearchMatch> }> }>;
+        };
+
+        let searchApiPromise: Promise<PagefindModule | null> | undefined;
+        const loadModule = new Function('path', 'return import(path);') as (path: string) => Promise<PagefindModule>;
 
         async function getSearchApi() {
           if (!searchApiPromise) {
             searchApiPromise = loadModule('/pagefind/pagefind.js')
               // pagefind assets exist after build in dist/pagefind.
-              .then((module) => {
+              .then((module: PagefindModule) => {
                 module.options({ excerptLength: 16 });
                 return module;
               })
@@ -435,35 +454,35 @@ const sortedDocs = [...docs].sort(sortDocsByOrder);
         }
 
         async function renderResults() {
-          const query = searchInput.value.trim();
+          const query = input.value.trim();
 
           if (!query) {
-            resultsContainer.classList.add('hidden');
-            resultsContainer.innerHTML = '';
+            results.classList.add('hidden');
+            results.innerHTML = '';
             return;
           }
 
           const pagefind = await getSearchApi();
 
           if (!pagefind) {
-            resultsContainer.classList.remove('hidden');
-            resultsContainer.innerHTML = '<p class="px-3 py-2 text-sm text-gray-500">Search index is generated during production build.</p>';
+            results.classList.remove('hidden');
+            results.innerHTML = '<p class="px-3 py-2 text-sm text-gray-500">Search index is generated during production build.</p>';
             return;
           }
 
           const search = await pagefind.search(query);
-          const matches = await Promise.all(search.results.slice(0, 8).map((r) => r.data()));
+          const matches = await Promise.all(search.results.slice(0, 8).map((r: { data: () => Promise<SearchMatch> }) => r.data()));
 
           if (matches.length === 0) {
-            resultsContainer.classList.remove('hidden');
-            resultsContainer.innerHTML = '<p class="px-3 py-2 text-sm text-gray-500">No matches found.</p>';
+            results.classList.remove('hidden');
+            results.innerHTML = '<p class="px-3 py-2 text-sm text-gray-500">No matches found.</p>';
             return;
           }
 
-          resultsContainer.classList.remove('hidden');
-          resultsContainer.innerHTML = matches
+          results.classList.remove('hidden');
+          results.innerHTML = matches
             .map(
-              (match) =>
+              (match: SearchMatch) =>
                 `<a href="${match.url}" class="block rounded-lg px-3 py-2 hover:bg-blue-50">` +
                 `<p class="text-sm font-medium text-gray-900">${match.meta?.title || 'Untitled'}</p>` +
                 `<p class="mt-1 text-xs text-gray-600">${match.excerpt || ''}</p>` +
@@ -472,15 +491,18 @@ const sortedDocs = [...docs].sort(sortDocsByOrder);
             .join('');
         }
 
-        let searchDebounceTimer;
-        searchInput.addEventListener('input', () => {
+        let searchDebounceTimer: ReturnType<typeof setTimeout> | undefined;
+        input.addEventListener('input', () => {
           clearTimeout(searchDebounceTimer);
           searchDebounceTimer = setTimeout(renderResults, 120);
         });
 
         document.addEventListener('click', (event) => {
-          if (!resultsContainer.contains(event.target) && event.target !== searchInput) {
-            resultsContainer.classList.add('hidden');
+          const target = event.target;
+          if (!(target instanceof Node)) return;
+
+          if (!results.contains(target) && target !== input) {
+            results.classList.add('hidden');
           }
         });
       }
