@@ -5,8 +5,6 @@ icon: "rocket"
 order: 1
 ---
 
-# Getting Started
-
 Welcome to our comprehensive documentation. This guide will help you get up and running quickly with our platform.
 
 ## Quick Start
@@ -27,17 +25,20 @@ Before you begin, ensure you have:
 ## Installation
 
 1. **Create a new project**
+
    ```bash
    npm create astro@latest my-project
    cd my-project
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Start development server**
+
    ```bash
    npm run dev
    ```
@@ -67,4 +68,3 @@ If you encounter any issues:
 4. Consult our [FAQ](/faq)
 
 Need more help? Join our [Discord community](https://discord.gg) or [open an issue](https://github.com/issues).
-

@@ -1,11 +1,10 @@
 ---
 title: "Introduction"
 description: "Welcome to our documentation"
+slug: "introduction"
 icon: "book"
 order: 0
 ---
-
-# Introduction
 
 Welcome to our project documentation. This guide will help you get started and show you how to make the most of our platform.
 
@@ -21,4 +20,3 @@ This project is a demonstration of Astro's content collections and documentation
 - **Content Collections**: Organize your content with ease
 
 For more information, check out the [Getting Started](/docs/getting-started) guide.
-

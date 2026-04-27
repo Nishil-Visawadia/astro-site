@@ -5,8 +5,6 @@ icon: "sparkles"
 order: 2
 ---
 
-# Advanced Usage
-
 Discover advanced features and customization options to get the most out of our platform.
 
 ## Configuration Options
@@ -134,4 +132,3 @@ server {
 - Open an [Issue](https://github.com/issues)
 
 Remember to always refer to our [Security Guidelines](/security) when implementing advanced features.
-
