@@ -1,4 +1,4 @@
-FROM cgr.dev/chainguard/node:latest-dev AS base
+FROM node:22-alpine AS base
 WORKDIR /app
 ENV NODE_ENV=production
 
@@ -8,7 +8,7 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-FROM cgr.dev/chainguard/caddy:latest AS runtime
+FROM caddy:2-alpine AS runtime
 COPY --from=base /app/dist /srv
 COPY Caddyfile /etc/caddy/Caddyfile
 
