@@ -75,7 +75,7 @@ src/
     ├── ci.yml                  # Install, typecheck, and build
     └── docker-publish.yml      # Build and publish container image
 
-Dockerfile                      # Production container image
+Dockerfile                      # Production container image (Chainguard Node + Nginx)
 
 docker-compose.yml              # Local container run example
 ```
@@ -207,14 +207,14 @@ docker build -t astro-site:latest .
 ### Run the Container
 
 ```bash
-docker run --rm -p 8080:80 astro-site:latest
+docker run --rm -p 8080:8080 astro-site:latest
 ```
 
 Open `http://localhost:8080`.
 
 ### Docker Compose
 
-The included `docker-compose.yml` file builds and runs the site on port `8080`:
+The included `docker-compose.yml` file builds and runs the site on port `8080` (container and host):
 
 ```bash
 docker compose up --build

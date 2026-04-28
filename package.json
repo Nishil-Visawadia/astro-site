@@ -2,6 +2,9 @@
   "name": "astro-site",
   "type": "module",
   "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -12,7 +15,6 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.8",
     "@astrojs/markdown-remark": "^7.1.1",
     "@astrojs/react": "^5.0.4",
     "@fontsource/inter": "^5.2.8",
@@ -28,11 +30,12 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "tailwindcss": "^4.1.14",
-    "tailwindcss-fluid-type": "^2.0.7",
-    "typescript": "^5.9.3"
+    "tailwindcss-fluid-type": "^2.0.7"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.8",
     "@tailwindcss/vite": "^4.1.14",
-    "pagefind": "^1.5.2"
+    "pagefind": "^1.5.2",
+    "typescript": "^5.9.3"
   }
 }
