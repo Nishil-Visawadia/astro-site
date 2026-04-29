@@ -17,7 +17,7 @@ npm create astro@latest
 
 Before you begin, ensure you have:
 
-- Node.js 16 or higher installed
+- Node.js 22.12.0 or higher installed
 - npm or yarn package manager
 - Basic knowledge of JavaScript/TypeScript
 - A code editor of your choice

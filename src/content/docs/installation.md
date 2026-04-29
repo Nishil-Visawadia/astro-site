@@ -1,7 +1,7 @@
 ---
 title: "Installation & Setup"
 description: "Complete step-by-step guide to install and configure the documentation framework"
-icon: "rocket"
+icon: "download"
 order: 1.5
 ---
 
@@ -18,6 +18,7 @@ Before you begin, ensure your system has:
 - **RAM**: Minimum 2GB recommended
 
 Check your versions:
+
 ```bash
 node --version    # Should be v22.12.0 or higher
 npm --version     # Should be v10.x or higher
@@ -28,13 +29,15 @@ git --version     # Should be installed
 
 ### 1. Clone or Copy the Framework
 
-**Option A: Clone from repository**
+#### Option A: Clone from repository
+
 ```bash
 git clone https://github.com/your-org/astro-site.git your-docs
 cd your-docs
 ```
 
-**Option B: Copy as template**
+#### Option B: Copy as template**
+
 ```bash
 cp -r astro-site your-docs
 cd your-docs
@@ -47,13 +50,15 @@ npm install
 ```
 
 This command will:
+
 - Download all required packages
 - Install Astro, Tailwind CSS, GSAP, and other dependencies
 - Create a `node_modules` folder
 - Generate `package-lock.json` (don't delete this!)
 
 **Expected output:**
-```
+
+```cmd
 up to date, audited X packages in Xs
 ```
 
@@ -66,7 +71,8 @@ npm run check
 ```
 
 You should see:
-```
+
+```cmd
 Checking types...
 0 errors, 0 warnings, 0 hints
 ✓ Build validation complete
@@ -129,7 +135,8 @@ npm run dev
 ```
 
 Output:
-```
+
+```cmd
 astro dev
   ▶ Starting dev server...
   ▶ Local    http://localhost:3000/
@@ -138,7 +145,7 @@ astro dev
 
 ### Access Your Site
 
-- **Local**: http://localhost:3000
+- **Local**: <http://localhost:3000>
 - **From network**: Use `npm run dev -- --host` to expose to your network
 
 ### Available Development Commands
@@ -153,6 +160,7 @@ astro dev
 ### Hot Reloading
 
 Any changes to:
+
 - Markdown files in `src/content/docs/`
 - React/Astro components in `src/components/`
 - Styles in `src/styles/`
@@ -176,6 +184,7 @@ After installation:
 **Error**: `Error: Node version must be >= 22.12.0`
 
 **Solution**: Update Node.js
+
 ```bash
 # Using nvm (recommended)
 nvm install 22.12.0
@@ -189,6 +198,7 @@ nvm use 22.12.0
 **Error**: `npm ERR! code ERR_SOCKET_HANG_UP`
 
 **Solution**: Clear npm cache
+
 ```bash
 npm cache clean --force
 rm -rf node_modules package-lock.json
@@ -200,11 +210,13 @@ npm install
 **Error**: `Error: listen EADDRINUSE: address already in use :::3000`
 
 **Solution**: Use a different port
+
 ```bash
 npm run dev -- --port 3001
 ```
 
 Or kill the process using port 3000:
+
 ```bash
 # Windows
 netstat -ano | findstr :3000
@@ -220,6 +232,7 @@ kill -9 <PID>
 **Error**: `error: Cannot find module '@tailwindcss/vite'`
 
 **Solution**: Reinstall dependencies
+
 ```bash
 rm -rf node_modules package-lock.json
 npm install
@@ -229,8 +242,8 @@ npm run build
 ## Getting Help
 
 - **Documentation**: Check other guides in this documentation
-- **GitHub Issues**: https://github.com/your-org/astro-site/issues
-- **Astro Docs**: https://docs.astro.build
+- **GitHub Issues**: <https://github.com/your-org/astro-site/issues>
+- **Astro Docs**: <https://docs.astro.build>
 - **Community**: Join community Slack or Discord
 
 ## What's Included

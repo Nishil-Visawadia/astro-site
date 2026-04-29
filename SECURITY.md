@@ -4,7 +4,7 @@
 
 **Please do NOT open public GitHub issues for security vulnerabilities.**
 
-If you discover a security vulnerability in this documentation framework, please email us at **security@yourcompany.com** with:
+If you discover a security vulnerability in this documentation framework, please email us at **<nishilvisawadia@duck.com>** with:
 
 1. Description of the vulnerability
 2. Steps to reproduce
@@ -18,6 +18,7 @@ We will acknowledge your report within 48 hours and provide updates as we work o
 This framework implements the following security controls:
 
 ### Code Security
+
 - ✅ TypeScript strict mode for type safety
 - ✅ Regular dependency audits via `npm audit`
 - ✅ Automated security scanning in CI/CD
@@ -25,18 +26,21 @@ This framework implements the following security controls:
 - ✅ Protected main branch requiring reviews
 
 ### Transport Security
+
 - ✅ HTTPS/TLS enforced in production
 - ✅ HSTS headers for all responses
 - ✅ Secure cookies (HttpOnly, Secure, SameSite)
 - ✅ CSP headers to prevent XSS
 
 ### Data Protection
+
 - ✅ Input validation and sanitization
 - ✅ Output encoding/escaping by default
 - ✅ No personal data collection
 - ✅ Encrypted backups
 
 ### Infrastructure Security
+
 - ✅ Hardened Docker base images (Chainguard)
 - ✅ Non-root container process
 - ✅ Read-only filesystems where possible
@@ -44,6 +48,7 @@ This framework implements the following security controls:
 - ✅ Zero known CVEs in production dependencies
 
 ### Operational Security
+
 - ✅ Access logs and monitoring
 - ✅ Error tracking and alerting
 - ✅ Automated backups
@@ -54,8 +59,8 @@ This framework implements the following security controls:
 
 This static site framework addresses the OWASP Top 10:
 
-| Risk                           | Status | Details                                         |
-| ------------------------------ | ------ | ----------------------------------------------- |
+| Risk                           | Status  | Details                                         |
+| ------------------------------ | ------- | ----------------------------------------------- |
 | A01: Broken Access Control     | ✅ Safe | Static content, no authentication needed        |
 | A02: Cryptographic Failures    | ✅ Safe | HTTPS enforced, no sensitive data               |
 | A03: Injection                 | ✅ Safe | TypeScript prevents injections, input validated |
@@ -72,6 +77,7 @@ This static site framework addresses the OWASP Top 10:
 When deploying this documentation site, follow these security practices:
 
 ### Deployment
+
 1. Use HTTPS with valid SSL certificate
 2. Enable security headers (provided in middleware)
 3. Set up access logs and monitoring
@@ -79,6 +85,7 @@ When deploying this documentation site, follow these security practices:
 5. Run containers as non-root user
 
 ### Maintenance
+
 1. Keep Node.js updated to latest LTS
 2. Run `npm audit` regularly
 3. Update dependencies monthly
@@ -86,6 +93,7 @@ When deploying this documentation site, follow these security practices:
 5. Test backups monthly
 
 ### Access Control
+
 1. Restrict deployment access
 2. Use strong SSH keys or OAuth tokens
 3. Require code reviews for all changes
@@ -95,12 +103,14 @@ When deploying this documentation site, follow these security practices:
 ## Security Updates
 
 We monitor security advisories for:
+
 - Node.js security releases
 - npm package vulnerabilities
 - Astro framework updates
 - Dependency vulnerabilities
 
 When a security update is available:
+
 1. We create a patch release
 2. Update all examples
 3. Announce in security advisory
@@ -158,9 +168,9 @@ These are by design - they eliminate entire categories of vulnerabilities.
 
 ## Contact
 
-For security questions or concerns, please contact: **security@yourcompany.com**
+For security questions or concerns, please contact: **<nishilvisawadia@duck.com>**
 
 ---
 
-**Last Updated**: 2026-04-28  
+**Last Updated**: 2026-04-29
 **Review Schedule**: Quarterly

@@ -7,17 +7,21 @@ Use this checklist to ensure your documentation site is secure before going live
 ### Code Security
 
 - [ ] **Dependency Audit**
+
   ```bash
   npm audit
   npm audit fix
   ```
+
   - [ ] All critical vulnerabilities resolved
   - [ ] Production dependencies free of known CVEs
 
 - [ ] **Type Safety**
+
   ```bash
   npm run check
   ```
+
   - [ ] Zero TypeScript errors
   - [ ] Zero warnings
 
@@ -29,9 +33,11 @@ Use this checklist to ensure your documentation site is secure before going live
 ### Build Verification
 
 - [ ] **Local Build**
+
   ```bash
   npm run build
   ```
+
   - [ ] Build succeeds without errors
   - [ ] All pages generated in `dist/`
   - [ ] Search index created (`pagefind.json`)
@@ -51,11 +57,14 @@ Use this checklist to ensure your documentation site is secure before going live
   - [ ] X-XSS-Protection: 1; mode=block
 
 **For Vercel/Netlify**:
+
 - [ ] `vercel.json` or `netlify.toml` configured
 
 **For Self-Hosted**:
+
 - [ ] Nginx config (`nginx.conf`) deployed
 - [ ] Headers validated via:
+
   ```bash
   curl -I https://docs.example.com
   ```
@@ -75,6 +84,7 @@ Use this checklist to ensure your documentation site is secure before going live
   - [ ] HSTS preload header considered
 
 **Test**:
+
 ```bash
 curl -I https://docs.example.com  # Should show 200 OK
 openssl s_client -connect docs.example.com:443  # Verify cert
@@ -101,16 +111,20 @@ openssl s_client -connect docs.example.com:443  # Verify cert
   - [ ] Image scanned for CVEs
 
 - [ ] **Build Process**
+
   ```bash
   docker build -t docs-site:latest .
   ```
+
   - [ ] Build succeeds
   - [ ] Image size reasonable (~150-200MB)
 
 - [ ] **Security Scanning**
+
   ```bash
   trivy image docs-site:latest
   ```
+
   - [ ] Zero critical vulnerabilities
   - [ ] Accept or fix high vulnerabilities
 
@@ -215,6 +229,7 @@ openssl s_client -connect docs.example.com:443  # Verify cert
 ### Security Testing
 
 - [ ] **Vulnerability Scanning**
+
   ```bash
   npm audit
   npm audit fix
@@ -238,9 +253,10 @@ openssl s_client -connect docs.example.com:443  # Verify cert
   - [ ] HSTS preload considered
 
 **Test online**:
-- https://www.ssllabs.com/ssltest/
-- https://securityheaders.com/
-- https://observatory.mozilla.org/
+
+- <https://www.ssllabs.com/ssltest/>
+- <https://securityheaders.com/>
+- <https://observatory.mozilla.org/>
 
 ### Documentation
 
@@ -319,4 +335,4 @@ openssl s_client -connect docs.example.com:443  # Verify cert
 **Last Updated**: 2026-04-28  
 **Next Review**: 2026-07-28
 
-For questions, contact: security@yourcompany.com
+For questions, contact: <nishilvisawadia@duck.com>

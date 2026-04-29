@@ -28,6 +28,7 @@ Use this repository when you want:
   - generated right-side table of contents
 - Pagefind search index generated after build
 - GSAP-powered motion for polished page transitions and interactions
+- Lucide icons via a shared registry for consistent navigation and cards
 - Shared typography and UI tokens in one global stylesheet
 - Docker-ready production build
 - GitHub Actions workflow for CI
@@ -42,8 +43,9 @@ Use this repository when you want:
 - daisyUI in light mode
 - Pagefind
 - GSAP
+- Lucide React
 - React 19 runtime dependencies for future extensibility
-- Node.js 20 LTS for local development and container builds
+- Node.js 22.12.0 LTS for local development and container builds
 
 ## Repository Layout
 
@@ -135,10 +137,23 @@ Supported frontmatter:
 title: "Page title"
 description: "Page summary"
 slug: "optional/custom-path"
-icon: "book"
+icon: "book-open"
 order: 10
 ---
 ```
+
+Recommended Lucide icon values:
+
+- `book-open` for introductions, concepts, and general guides
+- `rocket` for setup and getting started
+- `pen-tool` for authoring and editing workflows
+- `cloud-upload` for deployment and release docs
+- `shield-check` for security and policy pages
+- `life-buoy` for troubleshooting and support
+- `settings-2` for configuration
+- `sparkles` for advanced capabilities
+
+The shared registry lives in `src/lib/doc-icons.ts`, and the layout/homepage render those icons through `src/components/DocIcon.tsx`.
 
 Behavior:
 
@@ -378,6 +393,10 @@ Good next improvements for a real team rollout:
 - add docs ownership metadata or review dates
 - add a staging deployment job before production promotion
 - add container health checks and rollout alerts in the target platform
+
+## Support
+
+Mail at <nishilvisawadia@duck.com>
 
 ## License
 

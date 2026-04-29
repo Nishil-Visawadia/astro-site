@@ -1,7 +1,7 @@
 ---
 title: "Creating Documentation"
 description: "Learn how to create and organize documentation pages"
-icon: "book"
+icon: "pen-tool"
 order: 2.5
 ---
 
@@ -10,6 +10,7 @@ This guide shows you how to create, organize, and structure documentation pages 
 ## Understanding the Content Structure
 
 All documentation pages live in `src/content/docs/` as Markdown files. The framework automatically:
+
 - Generates routes for each file
 - Creates navigation menus
 - Indexes content for search
@@ -38,7 +39,7 @@ Every Markdown file must start with front matter (YAML block between `---` marke
 ---
 title: "Your Page Title"
 description: "Brief description for search and metadata"
-icon: "book"
+icon: "book-open"
 order: 3
 ---
 
@@ -49,13 +50,13 @@ Content goes here...
 
 ### 3. Front Matter Fields Explained
 
-| Field         | Type   | Required | Description                                 |
-| ------------- | ------ | -------- | ------------------------------------------- |
-| `title`       | string | Yes      | Page title (shown in nav and header)        |
-| `description` | string | Yes      | Brief description for SEO and search        |
-| `icon`        | string | No       | Icon name (`book`, `rocket`, `sparkles`)    |
-| `order`       | number | Yes      | Sort order in navigation (lower = higher)   |
-| `slug`        | string | No       | Custom URL path (auto-generated if omitted) |
+| Field         | Type   | Required | Description                                                      |
+| ------------- | ------ | -------- | ---------------------------------------------------------------- |
+| `title`       | string | Yes      | Page title (shown in nav and header)                             |
+| `description` | string | Yes      | Brief description for SEO and search                             |
+| `icon`        | string | No       | Lucide icon name (for example `book-open`, `rocket`, `pen-tool`) |
+| `order`       | number | Yes      | Sort order in navigation (lower = higher)                        |
+| `slug`        | string | No       | Custom URL path (auto-generated if omitted)                      |
 
 ### 4. Example Page
 
@@ -63,7 +64,7 @@ Content goes here...
 ---
 title: "API Reference"
 description: "Complete API documentation"
-icon: "book"
+icon: "book-open"
 order: 5
 ---
 
@@ -88,11 +89,12 @@ curl -H "Authorization: Bearer YOUR_TOKEN" \
 
 ### Get All Documents
 
-```
+```cmd
 GET /v1/docs
 ```
 
 **Response:**
+
 ```json
 {
   "data": [
@@ -103,7 +105,6 @@ GET /v1/docs
     }
   ]
 }
-```
 ```
 
 ## Organizing Your Documentation
@@ -126,6 +127,7 @@ src/content/docs/
 ```
 
 Routes are automatically generated:
+
 - `src/content/docs/guides/authentication.md` → `/docs/guides/authentication`
 - `src/content/docs/tutorials/basic-setup.md` → `/docs/tutorials/basic-setup`
 
@@ -148,6 +150,7 @@ order: 3          # Appears third
 ```
 
 **Note**: Use decimal values for finer control:
+
 ```yaml
 order: 1.5  # Between order 1 and 2
 order: 2.7  # Between order 2 and 3
@@ -178,6 +181,7 @@ order: 2.7  # Between order 2 and 3
 #### Lists
 
 Unordered lists:
+
 ```markdown
 - Item 1
 - Item 2
@@ -186,6 +190,7 @@ Unordered lists:
 ```
 
 Ordered lists:
+
 ```markdown
 1. First step
 2. Second step
@@ -195,6 +200,7 @@ Ordered lists:
 #### Code Blocks
 
 JavaScript:
+
 ```markdown
 \`\`\`javascript
 function hello() {
@@ -204,6 +210,7 @@ function hello() {
 ```
 
 Bash:
+
 ```markdown
 \`\`\`bash
 npm install
@@ -238,19 +245,25 @@ npm run dev
 
 ## Using Icons
 
-Available icons for the `icon` field:
+Available Lucide icons for the `icon` field:
 
-| Icon       | Usage                         |
-| ---------- | ----------------------------- |
-| `book`     | General documentation, guides |
-| `rocket`   | Getting started, quick start  |
-| `sparkles` | Advanced features, premium    |
+| Icon           | Usage                         |
+| -------------- | ----------------------------- |
+| `book-open`    | General documentation, guides |
+| `rocket`       | Getting started, quick start  |
+| `sparkles`     | Advanced features, premium    |
+| `shield-check` | Security and compliance       |
+| `cloud-upload` | Deployment and release        |
+| `life-buoy`    | Troubleshooting and support   |
+| `pen-tool`     | Authoring and content editing |
+| `settings-2`   | Configuration and setup       |
 
 Add to your front matter:
+
 ```yaml
 ---
 title: "My Page"
-icon: "rocket"
+icon: "settings-2"
 ---
 ```
 
@@ -285,7 +298,6 @@ npm install your-package
 ```javascript
 import { yourFunction } from 'your-package';
 yourFunction();
-```
 ```
 
 ### 3. Progressive Disclosure
@@ -326,6 +338,7 @@ Learn more in the [Getting Started](/docs/getting-started) guide.
 ## Preview Your Changes
 
 1. Make sure dev server is running:
+
    ```bash
    npm run dev
    ```
@@ -345,6 +358,7 @@ npm run build
 ```
 
 This will:
+
 - Generate static HTML pages
 - Create search index (Pagefind)
 - Output to `dist/` folder
@@ -394,8 +408,8 @@ npm run dev
 ## Next Steps
 
 Now that you have... continue with [Advanced Usage](/docs/advanced-usage).
-```
 
+```text
 ### Reference Page
 
 ```markdown
@@ -424,14 +438,13 @@ Retrieve a specific document.
   "id": "doc-123",
   "title": "Example",
   "content": "..."
-}
+}```
 ```
 
 ### Example
 
 ```bash
 curl https://api.example.com/docs/doc-123
-```
 ```
 
 ## Need Help?

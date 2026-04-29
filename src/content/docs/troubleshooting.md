@@ -1,7 +1,7 @@
 ---
 title: "Troubleshooting & FAQ"
 description: "Common issues, solutions, and frequently asked questions"
-icon: "book"
+icon: "life-buoy"
 order: 7
 ---
 
@@ -16,6 +16,7 @@ Find solutions to common problems and answers to frequently asked questions.
 **Cause**: Missing dev dependencies or incomplete installation
 
 **Solution**:
+
 ```bash
 rm -rf node_modules package-lock.json
 npm install
@@ -27,6 +28,7 @@ npm run build
 **Cause**: Incorrect Node.js version
 
 **Solution**:
+
 ```bash
 # Check current version
 node --version
@@ -43,6 +45,7 @@ nvm use 22.12.0
 **Cause**: Build artifacts missing
 
 **Solution**:
+
 ```bash
 npm run check   # Verify no errors
 npm run build   # Full rebuild
@@ -56,6 +59,7 @@ npm run preview # Test locally
 **Cause**: Another process using the port
 
 **Solution**:
+
 ```bash
 # Use different port
 npm run dev -- --port 3001
@@ -75,6 +79,7 @@ kill -9 <PID>
 **Cause**: File watcher limit exceeded
 
 **Solution**:
+
 ```bash
 # macOS (increase file watcher limit)
 echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
@@ -89,6 +94,7 @@ npm run dev
 **Cause**: Many files or large dependencies
 
 **Solution**:
+
 - Check for large `node_modules` folder
 - Use SSD instead of HDD
 - Reduce number of watched files
@@ -101,16 +107,18 @@ npm run dev
 **Cause**: Missing front matter or incorrect syntax
 
 **Solution**:
+
 ```markdown
 ---
 title: "My Page"           # Required
 description: "About page"  # Required
 order: 3                   # Required (number)
-icon: "book"               # Optional
+icon: "book-open"          # Optional
 ---
 ```
 
 Verify:
+
 - Front matter between `---` markers
 - All required fields present
 - Proper YAML syntax (no missing colons)
@@ -120,6 +128,7 @@ Verify:
 **Cause**: Pagefind not ran or stale cache
 
 **Solution**:
+
 ```bash
 # Full rebuild with search
 npm run build   # Includes postbuild Pagefind step
@@ -133,6 +142,7 @@ npx pagefind --site dist
 **Cause**: Markdown syntax error
 
 **Solution**:
+
 ```markdown
 # Incorrect (missing language)
 \`\`\`
@@ -152,11 +162,13 @@ code here
 **Cause**: Incorrect route or page not found
 
 **Solution**:
+
 - Verify file exists in `src/content/docs/`
 - Check path is correct
 - Use exact filenames (case-sensitive on Linux)
 
 **Examples**:
+
 ```markdown
 # Correct (using slug)
 [Link](/docs/getting-started)
@@ -174,6 +186,7 @@ code here
 **Cause**: Route mismatch
 
 **Solution**:
+
 - Ensure current URL matches link exactly
 - Check slug field in front matter
 - Verify no trailing slashes in navigation
@@ -183,6 +196,7 @@ code here
 #### ❌ Sidebar text blurry or hard to read
 
 **Cause** (Fixed in this update):
+
 - Missing z-index
 - Backdrop blur effects
 
@@ -193,6 +207,7 @@ code here
 **Cause**: Responsive classes not working
 
 **Solution**:
+
 - Verify Tailwind CSS processed correctly
 - Check viewport meta tag in head
 - Clear browser cache
@@ -202,6 +217,7 @@ code here
 **Cause**: CSS cache or Tailwind rebuild needed
 
 **Solution**:
+
 ```bash
 # Restart dev server
 npm run dev
@@ -218,6 +234,7 @@ Cmd+Shift+R (macOS)
 **Cause**: Environment differences
 
 **Solution**:
+
 ```yaml
 # Ensure Node version matches
 - uses: actions/setup-node@v4
@@ -230,6 +247,7 @@ Cmd+Shift+R (macOS)
 **Cause**: Configuration or environment mismatch
 
 **Solution**:
+
 - Check `astro.config.mjs` site URL
 - Verify environment variables set
 - Test with `npm run build && npm run preview`
@@ -239,6 +257,7 @@ Cmd+Shift+R (macOS)
 **Cause**: Missing dependencies or incorrect base image
 
 **Solution**:
+
 ```bash
 # Rebuild from scratch
 docker build --no-cache -t docs-site:latest .
@@ -252,6 +271,7 @@ docker build -t docs-site:latest . 2>&1 | tail -20
 **Cause**: Pagefind index not generated in build
 
 **Solution**:
+
 ```json
 {
   "scripts": {
@@ -267,6 +287,7 @@ Verify in `package.json`.
 ### Q: Can I use a different framework?
 
 **A**: This is built on Astro. You can:
+
 - Modify components to use Vue/React/Svelte
 - Use Astro's integrations for other frameworks
 - Replace styling with CSS-in-JS solution
@@ -275,6 +296,7 @@ Verify in `package.json`.
 ### Q: How do I add user authentication?
 
 **A**: Static sites don't support traditional auth, but you can:
+
 - Use GitHub Pages private deployments
 - Add password protection via hosting provider
 - Use third-party auth service (Auth0, Supabase)
@@ -283,6 +305,7 @@ Verify in `package.json`.
 ### Q: Can I use a database?
 
 **A**: Not directly (static site). Alternatives:
+
 - Use headless CMS (Contentful, Sanity)
 - Fetch data at build time
 - Use API for dynamic content
@@ -291,6 +314,7 @@ Verify in `package.json`.
 ### Q: How do I add comments/discussions?
 
 **A**: Use third-party solutions:
+
 - Giscus (GitHub Discussions)
 - Utterances (GitHub Issues)
 - Disqus
@@ -299,6 +323,7 @@ Verify in `package.json`.
 ### Q: Can I monitor analytics?
 
 **A**: Yes, multiple options:
+
 - Google Analytics
 - Plausible
 - Fathom
@@ -307,6 +332,7 @@ Verify in `package.json`.
 ### Q: How do I handle blog posts?
 
 **A**: Use content collections:
+
 1. Create `src/content/blog/` directory
 2. Add `.md` files with front matter
 3. Query with `getCollection('blog')`
@@ -315,6 +341,7 @@ Verify in `package.json`.
 ### Q: Can I preview changes before deploying?
 
 **A**: Yes:
+
 ```bash
 npm run build    # Build for production
 npm run preview  # Preview locally
@@ -324,6 +351,7 @@ npm run preview  # Preview locally
 ### Q: How do I redirect old URLs?
 
 **A**: Using redirects middleware:
+
 ```typescript
 // src/middleware.ts
 export const onRequest = defineMiddleware((context, next) => {
@@ -343,12 +371,14 @@ export const onRequest = defineMiddleware((context, next) => {
 ### Q: How do I optimize for SEO?
 
 **A**: Astro handles most automatically:
+
 - Semantic HTML generated
 - Meta tags for each page
 - Sitemap at `/sitemap.xml`
 - Open Graph tags (add to layout)
 
 Add to `src/layouts/DocsLayout.astro`:
+
 ```astro
 <meta name="og:title" content={title} />
 <meta name="og:description" content={description} />
@@ -358,6 +388,7 @@ Add to `src/layouts/DocsLayout.astro`:
 ### Q: How do I handle 404 errors?
 
 **A**: Create `src/pages/404.astro`:
+
 ```astro
 ---
 import DocsLayout from '../layouts/DocsLayout.astro';
@@ -373,6 +404,7 @@ import DocsLayout from '../layouts/DocsLayout.astro';
 ### Q: How often should I update dependencies?
 
 **A**: Best practices:
+
 - Monthly security updates
 - Quarterly feature updates
 - Use `npm outdated` to check
@@ -388,7 +420,8 @@ npm install package@latest
 
 ### Q: How do I backup my documentation?
 
-**A**: 
+**A**:
+
 - Use Git for version control (recommended)
 - Export as static files from `dist/`
 - Use hosting provider backup features
@@ -403,6 +436,7 @@ git push origin v1.0.0-backup
 ### Q: Can I use custom domains?
 
 **A**: Yes, all hosting providers support it:
+
 - Update DNS records
 - Set custom domain in provider settings
 - Enable HTTPS/SSL certificate
@@ -421,6 +455,7 @@ du -sh dist/
 ```
 
 Tools:
+
 - Google Lighthouse
 - WebPageTest
 - GTmetrix
@@ -429,6 +464,7 @@ Tools:
 ### Q: How do I handle image optimization?
 
 **A**: Astro optimizes automatically:
+
 ```astro
 ---
 import { Image } from 'astro:assets';
@@ -443,6 +479,7 @@ import myImage from '../assets/image.png';
 **A**: Yes, via Remark plugins:
 
 In `astro.config.mjs`:
+
 ```javascript
 markdown: {
   remarkPlugins: [
@@ -463,6 +500,7 @@ markdown: {
 5. **Stack Overflow** - Tag with `astro`, `tailwindcss`
 
 **Reporting bugs:**
+
 - Minimal reproduction steps
 - Expected vs actual behavior
 - Error messages/logs
@@ -471,6 +509,7 @@ markdown: {
 ---
 
 **Most issues are solved by**:
+
 1. Reading the error message carefully
 2. Clearing cache: `rm -rf node_modules package-lock.json && npm install`
 3. Restarting dev server: `npm run dev`

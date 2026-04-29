@@ -70,18 +70,21 @@ Edit `src/styles/global.css`:
 ### Color Palette Example
 
 **Technology Brand:**
+
 ```css
 --brand: #007acc;        /* Blue */
 --brand-hover: #005a9e;  /* Darker blue */
 ```
 
 **Creative Brand:**
+
 ```css
 --brand: #ff6b6b;        /* Red */
 --brand-hover: #ee5a52;  /* Darker red */
 ```
 
 **Healthcare Brand:**
+
 ```css
 --brand: #00a854;        /* Green */
 --brand-hover: #007d3a;  /* Darker green */
@@ -95,34 +98,34 @@ The framework uses **Inter** by default. To use a different font:
 
 1. **Install new font from Fontsource:**
 
-```bash
-npm install @fontsource/roboto    # Example: Roboto
-```
+    ```bash
+    npm install @fontsource/roboto    # Example: Roboto
+    ```
 
 2. **Update `src/layouts/DocsLayout.astro`:**
 
-```typescript
-// Replace:
-import '@fontsource/inter/300.css';
-import '@fontsource/inter/400.css';
-import '@fontsource/inter/500.css';
-import '@fontsource/inter/600.css';
+    ```typescript
+    // Replace:
+    import '@fontsource/inter/300.css';
+    import '@fontsource/inter/400.css';
+    import '@fontsource/inter/500.css';
+    import '@fontsource/inter/600.css';
 
-// With:
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/600.css';
-```
+    // With:
+    import '@fontsource/roboto/300.css';
+    import '@fontsource/roboto/400.css';
+    import '@fontsource/roboto/500.css';
+    import '@fontsource/roboto/600.css';
+    ```
 
 3. **Update `src/styles/global.css`:**
 
-```css
-:root {
-  --font-sans: 'Roboto', sans-serif;
-  --font-display: 'Roboto', sans-serif;
-}
-```
+    ```css
+    :root {
+      --font-sans: 'Roboto', sans-serif;
+      --font-display: 'Roboto', sans-serif;
+    }
+    ```
 
 ### Adjust Type Scale
 
@@ -212,25 +215,33 @@ In `src/layouts/DocsLayout.astro`:
 
 ### Change Icon Set
 
-Edit icon mapping in `src/layouts/DocsLayout.astro`:
+Edit the shared Lucide registry in `src/lib/doc-icons.ts`:
 
 ```typescript
-const icons: Record<string, string> = {
-  book: `<svg>...</svg>`,
-  rocket: `<svg>...</svg>`,
-  sparkles: `<svg>...</svg>`,
-  // Add more:
-  settings: `<svg>...</svg>`,
-  users: `<svg>...</svg>`,
+export const docIconMap = {
+  'book-open': BookOpen,
+  rocket: Rocket,
+  'pen-tool': PenTool,
+  'cloud-upload': CloudUpload,
+  'shield-check': ShieldCheck,
 };
 ```
+
+Recommended semantic icon choices:
+
+- `book-open` for docs and reference content
+- `rocket` for onboarding and fast starts
+- `pen-tool` for authoring workflows
+- `cloud-upload` for deployment and publishing
+- `shield-check` for security and policy material
+- `life-buoy` for troubleshooting and support
 
 Use in front matter:
 
 ```yaml
 ---
 title: "Settings"
-icon: "settings"
+icon: "settings-2"
 ---
 ```
 
@@ -385,6 +396,7 @@ Edit `src/layouts/DocsLayout.astro`:
 ## Theme Presets
 
 ### Professional (Default)
+
 - Brand: Blue (#0066cc)
 - Font: Inter
 - Borders: Subtle gray

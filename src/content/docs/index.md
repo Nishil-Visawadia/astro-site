@@ -2,7 +2,7 @@
 title: "Introduction"
 description: "A comprehensive guide to get started with our platform"
 slug: "introduction"
-icon: "book"
+icon: "book-open"
 order: 0
 ---
 

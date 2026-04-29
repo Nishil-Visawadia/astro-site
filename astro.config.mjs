@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config';
+import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
@@ -22,7 +23,7 @@ export default defineConfig({
   // Security: Enable middleware for runtime security headers
   // Note: Middleware runs at deployment (Vercel, Netlify, etc)
   // For self-hosted, use Nginx config instead
-  integrations: [],
+  integrations: [react()],
 
   // Build optimization
   build: {

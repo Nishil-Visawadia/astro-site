@@ -1,7 +1,7 @@
 ---
 title: "Deployment & Hosting"
 description: "Deploy your documentation to production with various hosting options"
-icon: "rocket"
+icon: "cloud-upload"
 order: 5
 ---
 
@@ -23,9 +23,10 @@ npm run preview
 ```
 
 You should see:
+
 - Zero errors/warnings from type checker
 - Successful build output with Pagefind indexing
-- Site loads correctly on http://localhost:3000
+- Site loads correctly on <http://localhost:3000>
 
 ### 2. Test Production Build Locally
 
@@ -34,7 +35,8 @@ npm run build
 npm run preview
 ```
 
-Navigate to http://localhost:3000 and verify:
+Navigate to <http://localhost:3000> and verify:
+
 - All pages load correctly
 - Navigation works
 - Search indexes successfully
@@ -50,14 +52,15 @@ Vercel is the easiest option with automatic deployments.
 
 1. **Push your code to GitHub**
 
-```bash
-git add .
-git commit -m "Initial documentation site"
-git push origin main
-```
+    ```bash
+    git add .
+    git commit -m "Initial documentation site"
+    git push origin main
+    ```
 
 2. **Create Vercel account**
-   - Go to https://vercel.com
+
+   - Go to <https://vercel.com>
    - Click "Sign Up"
    - Choose "Continue with GitHub"
 
@@ -70,6 +73,7 @@ git push origin main
 ### Auto-Deployment
 
 After initial setup, every push to `main` automatically:
+
 - Builds your site
 - Runs tests
 - Deploys to production
@@ -86,67 +90,68 @@ After initial setup, every push to `main` automatically:
 
 Easiest free option for open source.
 
-### Setup
+### Setup on Github Pages
 
 1. **Update `astro.config.mjs`:**
 
-```javascript
-export default defineConfig({
-  site: 'https://yourname.github.io/repository-name',
-  // ... rest of config
-});
-```
+    ```javascript
+    export default defineConfig({
+      site: 'https://yourname.github.io/repository-name',
+      // ... rest of config
+    });
+    ```
 
 2. **Create deployment workflow in `.github/workflows/deploy.yml`:**
 
-```yaml
-name: Deploy to GitHub Pages
+    ```yaml
+    name: Deploy to GitHub Pages
 
-on:
-  push:
-    branches: [main]
-  workflow_dispatch:
+    on:
+      push:
+        branches: [main]
+      workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+    jobs:
+      build:
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v4
       
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22.12.0'
+          - name: Setup Node
+            uses: actions/setup-node@v4
+            with:
+              node-version: '22.12.0'
       
-      - name: Install dependencies
-        run: npm ci
+          - name: Install dependencies
+            run: npm ci
       
-      - name: Build
-        run: npm run build
+          - name: Build
+            run: npm run build
       
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: './dist'
+          - name: Upload artifact
+            uses: actions/upload-pages-artifact@v3
+            with:
+              path: './dist'
   
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
-```
+      deploy:
+        needs: build
+        runs-on: ubuntu-latest
+        environment:
+          name: github-pages
+          url: ${{ steps.deployment.outputs.page_url }}
+        steps:
+          - name: Deploy to GitHub Pages
+            id: deployment
+            uses: actions/deploy-pages@v2
+    ```
 
 3. **Enable GitHub Pages**
+
    - Repository → Settings → Pages
    - Source: Deploy from a branch
    - Branch: gh-pages (auto-created by workflow)
@@ -213,11 +218,11 @@ services:
 
 Powerful platform with free tier.
 
-### Setup
+### Setup on Netlify
 
 1. **Push to GitHub/GitLab/Bitbucket**
 
-2. **Create Netlify account** at https://netlify.com
+2. **Create Netlify account** at <https://netlify.com>
 
 3. **Add new site**
    - Click "Add new site" → "Import an existing project"
@@ -248,53 +253,56 @@ directory = "netlify/functions"
 
 For enterprise deployments.
 
-### Setup
+### Setup on AWS S3 + CloudFront
 
 1. **Create S3 bucket**
+
    ```bash
    aws s3 mb s3://docs.yourcompany.com
    ```
 
 2. **Upload build**
+
    ```bash
    npm run build
    aws s3 sync dist/ s3://docs.yourcompany.com/
    ```
 
 3. **Create CloudFront distribution**
+
    - Origin: Your S3 bucket
    - Enable caching
    - Add SSL certificate
 
 4. **Setup auto-deployment with GitHub Actions**
 
-```yaml
-name: Deploy to AWS S3
+    ```yaml
+    name: Deploy to AWS S3
 
-on:
-  push:
-    branches: [main]
+    on:
+      push:
+        branches: [main]
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22.12.0'
-      
-      - run: npm ci
-      - run: npm run build
-      
-      - uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-      
-      - run: aws s3 sync dist/ s3://docs.yourcompany.com/
-```
+    jobs:
+      deploy:
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v4
+          - uses: actions/setup-node@v4
+            with:
+              node-version: '22.12.0'
+          
+          - run: npm ci
+          - run: npm run build
+          
+          - uses: aws-actions/configure-aws-credentials@v4
+            with:
+              aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+              aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+              aws-region: us-east-1
+          
+          - run: aws s3 sync dist/ s3://docs.yourcompany.com/
+    ```
 
 ## Environment-Specific Builds
 
@@ -302,7 +310,7 @@ jobs:
 
 Create `.env.staging`:
 
-```
+```cmd
 PUBLIC_SITE_URL=https://staging-docs.yourcompany.com
 PUBLIC_ENVIRONMENT=staging
 ```
@@ -317,7 +325,7 @@ astro build --mode staging
 
 Create `.env.production`:
 
-```
+```cmd
 PUBLIC_SITE_URL=https://docs.yourcompany.com
 PUBLIC_ENVIRONMENT=production
 ```
@@ -362,6 +370,7 @@ location ~* \.html?$ {
 ### CDN
 
 Use a CDN for better performance:
+
 - **Vercel**: Automatic
 - **Netlify**: Automatic
 - **AWS CloudFront**: Manual setup
@@ -387,7 +396,7 @@ sudo certbot certonly --webroot -w /var/www/docs \
 
 Add these headers via your hosting provider:
 
-```
+```json
 X-Content-Type-Options: nosniff
 X-Frame-Options: DENY
 X-XSS-Protection: 1; mode=block
@@ -416,11 +425,13 @@ npm install @sentry/astro
 ### Build Fails on Host
 
 **Check Node version:**
+
 ```bash
 node --version  # Must be 22.12.0+
 ```
 
 **Clear cache:**
+
 ```bash
 rm -rf node_modules package-lock.json
 npm install
@@ -430,6 +441,7 @@ npm run build
 ### Search Not Working After Deploy
 
 Ensure post-build hook runs:
+
 ```bash
 npm run build  # Includes Pagefind indexing
 ```
@@ -437,6 +449,7 @@ npm run build  # Includes Pagefind indexing
 ### Assets Return 404
 
 Check your `astro.config.mjs` site URL:
+
 ```javascript
 export default defineConfig({
   site: 'https://docs.yourcompany.com',
@@ -456,7 +469,7 @@ export default defineConfig({
 
 Services like UptimeRobot send alerts if site goes down:
 
-1. Create UptimeRobot account at https://uptimerobot.com
+1. Create UptimeRobot account at <https://uptimerobot.com>
 2. Add your documentation URL
 3. Set alert email
 

@@ -1,7 +1,7 @@
 ---
 title: "Security Best Practices"
 description: "Security guidelines, compliance, and hardening recommendations"
-icon: "book"
+icon: "shield-check"
 order: 6
 ---
 
@@ -12,81 +12,54 @@ This guide covers security best practices, compliance, and hardening recommendat
 This framework is built with security in mind:
 
 ✅ **Static Site Generation** - No server-side code execution
+
 ✅ **Hardened Container Images** - Chainguard base images, zero known CVEs
+
 ✅ **TypeScript** - Compile-time type safety
+
 ✅ **Dependency Scanning** - Regular security audits
+
 ✅ **HTTPS Support** - TLS/SSL encrypted by default
+
 ✅ **Content Security Policy** - Prevent XSS attacks
+
 ✅ **OWASP Compliance** - Follows OWASP Top 10 guidelines
 
 ## Content Security Policy (CSP)
 
 ### Add CSP Headers
 
-CSP headers prevent XSS and injection attacks.
+CSP headers prevent XSS and injection attacks. This project applies them in two places:
 
-**In `astro.config.mjs` (using middleware):**
+- `src/middleware.ts` for runtime adapters that support Astro middleware
+- `vercel.json` for Vercel deployments
 
-```javascript
-export default defineConfig({
-  // ... other config
-  middleware: 'auth',
-});
-```
-
-**Create middleware in `src/middleware.ts`:**
+**Current middleware implementation:**
 
 ```typescript
 import { defineMiddleware } from 'astro:middleware';
 
-export const onRequest = defineMiddleware((context, next) => {
-  // Add CSP header
-  const response = next();
-  
+export const onRequest = defineMiddleware(async (context, next) => {
+  const response = await next();
+
+  response.headers.set('X-Content-Type-Options', 'nosniff');
+  response.headers.set('X-Frame-Options', 'DENY');
+  response.headers.set('X-XSS-Protection', '1; mode=block');
+  response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+  response.headers.set('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
+  response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
   response.headers.set(
     'Content-Security-Policy',
-    "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none';"
+    "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://pagefind.app; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https:; frame-ancestors 'none'; base-uri 'self'; form-action 'self';"
   );
-  
+
   return response;
 });
 ```
 
-**Or via hosting provider (Vercel):**
+**Vercel deployment headers:**
 
-Create `vercel.json`:
-
-```json
-{
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none';"
-        },
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "X-Frame-Options",
-          "value": "DENY"
-        },
-        {
-          "key": "X-XSS-Protection",
-          "value": "1; mode=block"
-        },
-        {
-          "key": "Referrer-Policy",
-          "value": "strict-origin-when-cross-origin"
-        }
-      ]
-    }
-  ]
-}
-```
+The live deployment config in `vercel.json` mirrors the middleware headers and also sets `Permissions-Policy`, `HSTS`, and `Content-Security-Policy` for the whole site.
 
 ### CSP Header Breakdown
 
@@ -104,31 +77,36 @@ Create `vercel.json`:
 
 ### Essential Headers
 
-Implement these security headers:
+**Implement these security headers:**
 
-```
+```json
 X-Content-Type-Options: nosniff
 ```
+
 Prevents MIME type sniffing attacks.
 
-```
+```json
 X-Frame-Options: DENY
 ```
+
 Prevent clickjacking by disallowing framing.
 
-```
+```json
 X-XSS-Protection: 1; mode=block
 ```
+
 Enable browser XSS protection.
 
-```
+```json
 Referrer-Policy: strict-origin-when-cross-origin
 ```
+
 Control referrer information.
 
-```
+```json
 Strict-Transport-Security: max-age=31536000; includeSubDomains
 ```
+
 Force HTTPS (set max-age to seconds, 31536000 = 1 year).
 
 ### Nginx Configuration
@@ -250,7 +228,7 @@ Never commit secrets to Git.
 
 **Create `.env.local` (never commit this):**
 
-```
+```env
 DATABASE_URL=postgresql://user:password@host/db
 API_KEY=your-secret-key
 ```
@@ -388,6 +366,7 @@ export default defineConfig({
 ### A01: Broken Access Control
 
 ✅ **Implementation:**
+
 - Static site (no database)
 - All content publicly visible by design
 - No authentication required
@@ -395,6 +374,7 @@ export default defineConfig({
 ### A02: Cryptographic Failures
 
 ✅ **Implementation:**
+
 - HTTPS/TLS enforced
 - Secure headers set
 - No sensitive data in content
@@ -402,6 +382,7 @@ export default defineConfig({
 ### A03: Injection
 
 ✅ **Implementation:**
+
 - TypeScript prevents type-based injections
 - Template escaping by default
 - Input validation for search
@@ -409,6 +390,7 @@ export default defineConfig({
 ### A04: Insecure Design
 
 ✅ **Implementation:**
+
 - Static generation prevents server exploits
 - Minimal attack surface
 - No database connections
@@ -416,6 +398,7 @@ export default defineConfig({
 ### A05: Security Misconfiguration
 
 ✅ **Implementation:**
+
 - Hardened Docker images
 - Security headers configured
 - Dependency scanning enabled
@@ -423,6 +406,7 @@ export default defineConfig({
 ### A06: Vulnerable Components
 
 ✅ **Implementation:**
+
 - Regular `npm audit`
 - Automated dependency updates
 - GitHub security alerts
@@ -430,6 +414,7 @@ export default defineConfig({
 ### A07: Authentication Failures
 
 ✅ **Implementation:**
+
 - No authentication layer (not required)
 - Static content only
 - No user accounts
@@ -437,6 +422,7 @@ export default defineConfig({
 ### A08: Data Integrity Failures
 
 ✅ **Implementation:**
+
 - Content versioned in Git
 - Integrity checks available
 - Secure deployment pipeline
@@ -444,6 +430,7 @@ export default defineConfig({
 ### A09: Logging & Monitoring Gaps
 
 ✅ **Implementation:**
+
 - Server-side logging configured
 - Error monitoring (Sentry)
 - Performance monitoring available
@@ -451,6 +438,7 @@ export default defineConfig({
 ### A10: SSRF
 
 ✅ **Implementation:**
+
 - No external API calls from server
 - Static generation only
 - Limited outbound connections
@@ -460,30 +448,35 @@ export default defineConfig({
 Use this checklist before production deployment:
 
 **Code Security:**
+
 - [ ] No secrets in Git repo
 - [ ] TypeScript strict mode enabled
 - [ ] All dependencies audited
 - [ ] No console.log of sensitive data
 
 **Deployment Security:**
+
 - [ ] HTTPS/TLS configured
 - [ ] Security headers set
 - [ ] CSP policy configured
 - [ ] Environment variables set
 
 **Container Security:**
+
 - [ ] Using hardened base images
 - [ ] Non-root user in Dockerfile
 - [ ] No unnecessary packages installed
 - [ ] Security scanning passed
 
 **Operations Security:**
+
 - [ ] Logging enabled
 - [ ] Error monitoring configured
 - [ ] Uptime monitoring active
 - [ ] Backup strategy in place
 
 **Documentation:**
+
 - [ ] Security policy documented
 - [ ] Incident response plan created
 - [ ] Emergency contacts identified
@@ -521,16 +514,16 @@ docker run -d -p 8080:8080 docs-site:hotfix
 
 ## Security Resources
 
-- **OWASP**: https://owasp.org/
-- **NIST Cybersecurity**: https://www.nist.gov/cyberframework
-- **npm Security**: https://docs.npmjs.com/about-npm-security
-- **CIS Benchmarks**: https://www.cisecurity.org/benchmarks
-- **Astro Security**: https://docs.astro.build/guides/security
+- **OWASP**: <https://owasp.org/>
+- **NIST Cybersecurity**: <https://www.nist.gov/cyberframework>
+- **npm Security**: <https://docs.npmjs.com/about-npm-security>
+- **CIS Benchmarks**: <https://www.cisecurity.org/benchmarks>
+- **Astro Security**: <https://docs.astro.build/guides/security>
 
 ## Getting Help
 
-- Report security issues privately: security@yourcompany.com
-- GitHub Security Advisory: https://github.com/advisories
+- Report security issues privately: <nishilvisawadia@duck.com>
+- GitHub Security Advisory: <https://github.com/advisories>
 - Community: Join discussions in GitHub Issues
 
 ---
