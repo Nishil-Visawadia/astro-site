@@ -55,7 +55,7 @@ const sortedDocs = [...docs].sort(sortDocsByOrder);
   <body class="hig-shell h-full bg-gray-50">
     <div class="flex min-h-full">
       <!-- Sidebar -->
-      <aside class="fixed inset-y-0 left-0 hidden w-72 overflow-y-auto border-r border-gray-200 bg-white px-4 py-6 sm:px-6 lg:px-8 xl:block">
+      <aside class="fixed inset-y-0 left-0 z-30 hidden w-72 overflow-y-auto border-r border-gray-200 bg-white px-4 py-6 sm:px-6 lg:px-8 xl:block">
         <nav class="space-y-1">
           <div class="mb-8">
             <a href="/docs/introduction" class="flex items-center">
@@ -95,7 +95,7 @@ const sortedDocs = [...docs].sort(sortDocsByOrder);
       <!-- Main content -->
       <main class="flex-1 xl:pl-72 xl:pr-64">
         <!-- Top navigation -->
-        <nav class="js-doc-topbar fixed top-0 left-0 right-0 z-40 flex h-16 items-center justify-between bg-white/85 px-4 backdrop-blur-lg sm:px-6 xl:left-72 xl:right-64 xl:px-8 border-b border-gray-200/60">
+        <nav class="js-doc-topbar fixed top-0 left-0 right-0 z-40 flex h-16 items-center justify-between bg-white px-4 sm:px-6 xl:left-72 xl:right-64 xl:px-8 border-b border-gray-200/60">
           <div class="flex flex-1 items-center">
             <!-- Mobile navigation is intentionally simple and dependency-free. -->
             <details class="relative xl:hidden">
@@ -164,7 +164,7 @@ const sortedDocs = [...docs].sort(sortDocsByOrder);
       </main>
 
       <!-- Right sidebar -->
-      <aside class="fixed inset-y-0 right-0 hidden w-64 overflow-y-auto border-l border-gray-200/90 bg-white/90 px-4 py-6 backdrop-blur xl:block">
+      <aside class="fixed inset-y-0 right-0 z-30 hidden w-64 overflow-y-auto border-l border-gray-200/90 bg-white px-4 py-6 xl:block">
         <nav class="space-y-3">
           <h4 class="text-sm font-medium text-gray-900">On this page</h4>
           <div id="toc-nav" class="space-y-2"></div>
@@ -304,7 +304,7 @@ const sortedDocs = [...docs].sort(sortDocsByOrder);
 
         gsap.from('.js-doc-nav-item', {
           x: -10,
-          opacity: 0,
+
           duration: 0.5,
           stagger: 0.04,
           delay: 0.1,

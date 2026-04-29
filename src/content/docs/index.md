@@ -1,6 +1,6 @@
 ---
 title: "Introduction"
-description: "Welcome to our documentation"
+description: "A comprehensive guide to get started with our platform"
 slug: "introduction"
 icon: "book"
 order: 0

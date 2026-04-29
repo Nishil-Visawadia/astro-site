@@ -12,7 +12,11 @@
     "postbuild": "pagefind --site dist",
     "preview": "astro preview",
     "check": "astro check",
-    "astro": "astro"
+    "astro": "astro",
+    "security:audit": "npm audit --production",
+    "security:audit:fix": "npm audit fix",
+    "security:outdated": "npm outdated",
+    "security:check": "npm run security:audit && npm run security:outdated"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^7.1.1",
