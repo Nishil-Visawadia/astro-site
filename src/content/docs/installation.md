@@ -32,7 +32,7 @@ git --version     # Should be installed
 #### Option A: Clone from repository
 
 ```bash
-git clone https://github.com/your-org/astro-site.git your-docs
+git clone https://github.com/Nishil-Visawadia/astro-site.git your-docs
 cd your-docs
 ```
 
@@ -242,7 +242,7 @@ npm run build
 ## Getting Help
 
 - **Documentation**: Check other guides in this documentation
-- **GitHub Issues**: <https://github.com/your-org/astro-site/issues>
+- **GitHub Issues**: <https://github.com/Nishil-Visawadia/astro-site/issues>
 - **Astro Docs**: <https://docs.astro.build>
 - **Community**: Join community Slack or Discord
 
