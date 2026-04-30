@@ -32,14 +32,14 @@ git --version     # Should be installed
 #### Option A: Clone from repository
 
 ```bash
-git clone https://github.com/Nishil-Visawadia/astro-site.git your-docs
+git clone https://github.com/Nishil-Visawadia/VoidDraft.git your-docs
 cd your-docs
 ```
 
 #### Option B: Copy as template**
 
 ```bash
-cp -r astro-site your-docs
+cp -r VoidDraft your-docs
 cd your-docs
 ```
 
@@ -242,7 +242,7 @@ npm run build
 ## Getting Help
 
 - **Documentation**: Check other guides in this documentation
-- **GitHub Issues**: <https://github.com/Nishil-Visawadia/astro-site/issues>
+- **GitHub Issues**: <https://github.com/Nishil-Visawadia/VoidDraft/issues>
 - **Astro Docs**: <https://docs.astro.build>
 - **Community**: Join community Slack or Discord
 

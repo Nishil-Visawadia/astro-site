@@ -1,4 +1,4 @@
-# Astro Documentation Framework
+# VoidDraft Documentation Framework
 
 A production-ready, reusable documentation framework built with Astro 6, Tailwind CSS 4, Pagefind, and an Apple Human Interface Guidelines-inspired design system.
 
@@ -216,13 +216,13 @@ The repository includes a production-ready multi-stage Dockerfile.
 ### Build the Image
 
 ```bash
-docker build -t astro-site:latest .
+docker build -t VoidDraft:latest .
 ```
 
 ### Run the Container
 
 ```bash
-docker run --rm -p 8080:8080 astro-site:latest
+docker run --rm -p 8080:8080 VoidDraft:latest
 ```
 
 Open `http://localhost:8080`.
